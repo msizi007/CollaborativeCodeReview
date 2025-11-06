@@ -3,15 +3,14 @@ require("dotenv").config();
 import express, { Express, Request, Response, NextFunction } from "express";
 import path from "path";
 import { testConnection } from "./config/database";
+import userRoutes from "./routes/userRoutes";
 
 const app: Express = express();
 app.use(express.json());
 // serve static assets from public
 app.use(express.static(path.join(__dirname, "public")));
-
-app.get("/", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "views", "index.html"));
-});
+// routes
+app.use("/api/auth", userRoutes);
 
 // 404 ERROR - Middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -19,6 +18,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     sucess: false,
     message: "Not found! The route you have selected does not exist",
   });
+  next();
+});
+
+app.get("/", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
 const startServer = async () => {
