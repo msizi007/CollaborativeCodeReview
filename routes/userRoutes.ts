@@ -1,8 +1,18 @@
 import { Router } from "express";
-import { getAllUsers } from "../controllers/userController";
+import {
+  deleteUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+} from "../controllers/userController";
+import { protect } from "../middleware/auth";
 
 const router = Router();
+router.use(protect);
 
-router.get("/users", getAllUsers);
+router.get("/", getAllUsers);
+router.get("/:id", getUserById);
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 export default router;
