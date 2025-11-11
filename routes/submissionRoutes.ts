@@ -6,6 +6,11 @@ import {
   getSubmissionById,
   updateSubmission,
 } from "../controllers/submissionController";
+import {
+  createComment,
+  getAllComments,
+  getCommentById,
+} from "../controllers/commentController";
 
 const router = Router();
 
@@ -14,5 +19,9 @@ router.post("/", createSubmission);
 router.get("/:id", getSubmissionById);
 router.patch("/:id/status", updateSubmission);
 router.delete("/:id", deleteSubmission);
+
+router.get("/:id/comments", getAllComments);
+router.get("/:pid/comments/:cid", getCommentById);
+router.post("/:id/comments", createComment);
 
 export default router;
