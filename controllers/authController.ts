@@ -9,8 +9,6 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    log(email, password);
-
     if (!email || !password)
       return res.status(400).json({ message: "All fields are required" });
 
@@ -18,11 +16,7 @@ export const login = async (req: Request, res: Response) => {
 
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    log(103, user.password, password);
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    log(isPasswordValid);
 
     if (!isPasswordValid)
       return res.status(400).json({ message: "Invalid password" });
