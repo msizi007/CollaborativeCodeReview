@@ -26,6 +26,11 @@ app.use("/api/projects", projectRouters);
 app.use("/api/submissions", submissionRouter);
 app.use("/api/comments", commentsRouter);
 
+// landing
+app.get("/", (req: Request, res: Response) => {
+  res.sendFile("index.html");
+});
+
 // 404 ERROR - Middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({
@@ -33,10 +38,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     message: "Not found! The route you have selected does not exist",
   });
   next();
-});
-
-app.get("/", (req: Request, res: Response) => {
-  res.sendFile("index.html");
 });
 
 const startServer = async () => {

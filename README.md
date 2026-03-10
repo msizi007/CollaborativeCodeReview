@@ -1,5 +1,7 @@
 ## Collaborative Code Review
 
+![CollaborativeCodeReview](https://socialify.git.ci/msizi007/CollaborativeCodeReview/image?language=1&owner=1&name=1&stargazers=1&theme=Light)
+
 #### How to install
 
 1. create the .env file with the values

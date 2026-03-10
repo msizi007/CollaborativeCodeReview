@@ -1,16 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/index.css" />
-    <link rel="icon" href="/code.png" type="image/x-icon" />
+    <title>CodeReview API | Documentation</title>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #1e293b;
+        --tag-get: #22c55e;
+        --tag-post: #3b82f6;
+        --tag-put: #eab308;
+        --tag-delete: #ef4444;
+        --tag-patch: #8b5cf6;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      h2 {
+        color: var(--primary);
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+      }
+      .endpoint {
+        background: var(--card);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #cbd5e1;
+      }
+      .method {
+        font-weight: bold;
+        width: 80px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        text-align: center;
+        color: white;
+        margin-right: 15px;
+        font-size: 0.8rem;
+      }
+      .path {
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 600;
+        flex-grow: 1;
+      }
+      .desc {
+        font-size: 0.9rem;
+        color: #64748b;
+      }
+      .protected {
+        background: #fee2e2;
+        color: #991b1b;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 10px;
+        font-weight: bold;
+      }
+      /* Method Colors */
+      .GET {
+        background: var(--tag-get);
+      }
+      .POST {
+        background: var(--tag-post);
+      }
+      .PUT {
+        background: var(--tag-put);
+      }
+      .DELETE {
+        background: var(--tag-delete);
+      }
+      .PATCH {
+        background: var(--tag-patch);
+      }
+    </style>
   </head>
   <body>
-    <img src="/code.png" alt="logo" />
-    <h2>Welcome to Collaborative Code Review</h2>
-    <p>Your best Collaborative code review at your fingertips</p>
-    <script src="/js/index.js"></script>
+    <div class="container">
+      <header>
+        <h1>CodeReview Platform API</h1>
+        <p>
+          Welcome to the backend landing page. Use the endpoints below in
+          <strong>Thunder Client</strong> or <strong>Postman</strong>.
+        </p>
+      </header>
+
+      <div class="section">
+        <h2>Authentication (/api/auth)</h2>
+        <div class="endpoint">
+          <span class="method POST">POST</span
+          ><span class="path">/register</span
+          ><span class="desc">Create a new account</span>
+        </div>
+        <div class="endpoint">
+          <span class="method POST">POST</span><span class="path">/login</span
+          ><span class="desc">Obtain JWT Token</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>
+          Projects (/api/projects) <span class="protected">PROTECTED</span>
+        </h2>
+        <div class="endpoint">
+          <span class="method GET">GET</span><span class="path">/</span
+          ><span class="desc">Get all projects</span>
+        </div>
+        <div class="endpoint">
+          <span class="method POST">POST</span><span class="path">/</span
+          ><span class="desc">Create a project</span>
+        </div>
+        <div class="endpoint">
+          <span class="method GET">GET</span><span class="path">/:id</span
+          ><span class="desc">Get project details</span>
+        </div>
+        <div class="endpoint">
+          <span class="method PUT">PUT</span><span class="path">/:id</span
+          ><span class="desc">Update project info</span>
+        </div>
+        <div class="endpoint">
+          <span class="method DELETE">DELETE</span><span class="path">/:id</span
+          ><span class="desc">Remove project</span>
+        </div>
+        <div class="endpoint">
+          <span class="method GET">GET</span
+          ><span class="path">/:id/members</span
+          ><span class="desc">List project members</span>
+        </div>
+        <div class="endpoint">
+          <span class="method POST">POST</span
+          ><span class="path">/:id/members</span
+          ><span class="desc">Add user to project</span>
+        </div>
+        <div class="endpoint">
+          <span class="method DELETE">DELETE</span
+          ><span class="path">/:id/members/:uid</span
+          ><span class="desc">Remove user from project</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>code Submissions (/api/submissions)</h2>
+        <div class="endpoint">
+          <span class="method GET">GET</span><span class="path">/</span
+          ><span class="desc">List all code submissions</span>
+        </div>
+        <div class="endpoint">
+          <span class="method POST">POST</span><span class="path">/</span
+          ><span class="desc">Upload new code for review</span>
+        </div>
+        <div class="endpoint">
+          <span class="method GET">GET</span><span class="path">/:id</span
+          ><span class="desc">View specific submission</span>
+        </div>
+        <div class="endpoint">
+          <span class="method PATCH">PATCH</span
+          ><span class="path">/:id/status</span
+          ><span class="desc">Update status (e.g., Approved/Pending)</span>
+        </div>
+        <div class="endpoint">
+          <span class="method GET">GET</span
+          ><span class="path">/:id/comments</span
+          ><span class="desc">Get feedback on code</span>
+        </div>
+        <div class="endpoint">
+          <span class="method POST">POST</span
+          ><span class="path">/:id/comments</span
+          ><span class="desc">Add review comment</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Users (/api/users)</h2>
+        <div class="endpoint">
+          <span class="method GET">GET</span><span class="path">/</span
+          ><span class="desc">Get all users</span>
+        </div>
+        <div class="endpoint">
+          <span class="method GET">GET</span><span class="path">/:id</span
+          ><span class="desc">User profile info</span>
+        </div>
+        <div class="endpoint">
+          <span class="method PUT">PUT</span><span class="path">/:id</span
+          ><span class="desc">Update user data</span>
+        </div>
+        <div class="endpoint">
+          <span class="method DELETE">DELETE</span><span class="path">/:id</span
+          ><span class="desc">Delete account</span>
+        </div>
+      </div>
+      <div class="section">
+        <h2>Global Comments (/api/comments)</h2>
+        <div class="endpoint">
+          <span class="method PUT">PUT</span><span class="path">/:id</span
+          ><span class="desc">Edit a comment</span>
+        </div>
+        <div class="endpoint">
+          <span class="method DELETE">DELETE</span><span class="path">/:id</span
+          ><span class="desc">Remove a comment</span>
+        </div>
+      </div>
+      <footer>
+        <p style="text-align: center; font-size: 0.8rem; margin-top: 50px">
+          CodeReview Platform Backend | Port: 5000
+        </p>
+      </footer>
+    </div>
   </body>
 </html>
