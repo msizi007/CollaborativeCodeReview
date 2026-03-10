@@ -7,7 +7,6 @@ import {
   updateProjectDB,
 } from "../services/projectService";
 import { Project } from "../models/projectModel";
-import { log } from "console";
 
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
@@ -31,9 +30,7 @@ export const getProjectById = async (req: Request, res: Response) => {
 export const createProject = async (req: Request, res: Response) => {
   try {
     const project = req.body as Project;
-    log(101, project);
     const newProject = await insertIntoProjects(project);
-    log(102, newProject);
     res.status(201).json(newProject);
   } catch (error) {
     res.status(400).json(error);

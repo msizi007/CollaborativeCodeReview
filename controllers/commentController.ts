@@ -7,8 +7,6 @@ import {
   updateCommentDB,
 } from "../services/commentService";
 import { Comment } from "../models/commentModel";
-import { selectProjectByIdDB } from "../services/projectService";
-import { log } from "node:console";
 import { selectSubmissionById } from "../services/submissionService";
 
 export const getAllComments = async (req: Request, res: Response) => {
@@ -42,7 +40,6 @@ export const createComment = async (req: Request, res: Response) => {
   try {
     const comment = req.body as Comment;
     const { id } = req.params;
-    log(101, comment, id);
     const newComment = await insertComment(comment.content, Number(id));
     res.status(201).json(newComment);
   } catch (error) {

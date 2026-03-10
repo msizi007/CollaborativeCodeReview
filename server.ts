@@ -8,6 +8,11 @@ import authRoutes from "./routes/authRoutes";
 import projectRouters from "./routes/projectRoutes";
 import submissionRouter from "./routes/submissionRoutes";
 import commentsRouter from "./routes/commentRoutes";
+import { createCommentsTable } from "./models/commentModel";
+import { createMembersTable } from "./models/memberModel";
+import { createSubmissionsTable } from "./models/submissionModel";
+import { createProjectsTable } from "./models/projectModel";
+import { createUsersTable } from "./models/userModel";
 
 const app: Express = express();
 app.use(express.json());
@@ -35,7 +40,15 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 const startServer = async () => {
+  // Database connection
   await testConnection();
+  await createCommentsTable();
+  await createMembersTable();
+  await createProjectsTable();
+  await createSubmissionsTable();
+  await createUsersTable();
+
+  // app runner
   app.listen(process.env.PORT || 5000, () => {
     console.log(`App running on http://localhost:${process.env.PORT || 5000}`);
   });

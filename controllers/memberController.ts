@@ -6,8 +6,6 @@ import {
 } from "../services/memberService";
 import { selectUserById } from "../services/userServices";
 import { User } from "../models/userModel";
-import { getAllProjects } from "./projectController";
-import { log } from "node:console";
 
 export const getAllMembers = async (req: Request, res: Response) => {
   try {
@@ -23,7 +21,6 @@ export const addMember = async (req: Request, res: Response) => {
   try {
     const projectId = parseInt(req.params.id);
     const user = req.body as User;
-    log(201, projectId, user);
 
     // if usera data not found
     if (!user) {
