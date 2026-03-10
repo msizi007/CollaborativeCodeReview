@@ -16,9 +16,10 @@ export const query = (text: string, params: any) => db.query(text, params);
 // test connection function
 export const testConnection = async () => {
   try {
+    console.log("Attempting to connect to:", process.env.DB_NAME);
     await db.query("SELECT NOW()");
     console.log("Database connection successful");
   } catch (error) {
-    console.error("Database connection failed", error);
+    console.error("Database connection failed \n", error);
   }
 };

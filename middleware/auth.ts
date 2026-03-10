@@ -8,32 +8,43 @@ export interface JwtPayload {
   id?: number;
   email: string;
 }
-
 export const protect = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    const token = req.headers.authorization.split(" ")[1];
+  const authHeader = req.headers.authorization;
+  console.log({ authHeader });
+  try {
+    if (authHeader && authHeader.startsWith("Bearer")) {
+      const token = authHeader.split(" ")[1];
+      console.log({ token });
 
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    ) as JwtPayload;
+      if (!token) {
+        return res.status(401).json({ message: "Token missing from header" });
+      }
 
-    const user: User | null = await selectUserByEmail(decoded.email);
+      console.log({
+        token,
+        envToken: process.env.JWT_SECRET?.trim() as string,
+      });
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET as string,
+      ) as JwtPayload;
 
-    // if user not found
-    if (!user) return res.status(401).json({ message: "User not found" });
+      console.log({ decoded });
 
-    req.user = user || undefined;
-    return next();
-  } else {
-    res.status(403).json({ message: "Not authorized" });
-    return next();
+      const user = await selectUserByEmail(decoded.email);
+      if (!user) return res.status(401).json({ message: "User not found" });
+
+      req.user = user;
+      return next();
+    } else {
+      return res.status(403).json({ message: "No authorization header found" });
+    }
+  } catch (error) {
+    // This catches "jwt malformed", "jwt expired", etc.
+    return res.status(401).json({ message: "Invalid or malformed token" });
   }
 };

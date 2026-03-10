@@ -16,6 +16,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "All fields are required" });
 
     const user = await selectUserByEmail(email);
+    console.log(801, { user });
 
     if (!user) return res.status(400).json({ message: "User not found" });
 
@@ -31,10 +32,10 @@ export const login = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET as string,
-      { expiresIn: "1d" }
+      { expiresIn: "1d" },
     );
 
-    return res.status(200).json({ user, token }); // ✅ return once
+    return res.status(200).json({ user, token }); //  return once
   } catch (error) {
     res.status(400).json(`Error: ${error}`);
   }
@@ -43,6 +44,8 @@ export const login = async (req: Request, res: Response) => {
 export const register = async (req: Request<{}, {}, User>, res: Response) => {
   try {
     const { username, email, password } = req.body;
+
+    console.log({ username, email, password });
 
     if (!username || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
@@ -55,6 +58,7 @@ export const register = async (req: Request<{}, {}, User>, res: Response) => {
       email,
       password: hashPassword,
     } as User);
+    console.log(501, { user });
     res.status(201).json(user);
   } catch (error) {
     res.status(400).json(error);

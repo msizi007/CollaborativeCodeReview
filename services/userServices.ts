@@ -1,4 +1,3 @@
-import { log } from "node:console";
 import { query } from "../config/database";
 import { User } from "../models/userModel";
 
@@ -18,17 +17,15 @@ export const selectUserByEmail = async (email: string) => {
 };
 
 export const insertUserDB = async (user: User) => {
-  const { rows } = await query(
-    "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-    [user.username, user.email, user.password]
-  );
+  const sql = `INSERT INTO public.users ("username", "email", "password") VALUES ($1, $2, $3) RETURNING *`;
+  const { rows } = await query(sql, [user.username, user.email, user.password]);
   return rows[0];
 };
 
 export const loginUserDB = async (email: string, password: string) => {
   const { rows } = await query(
     "SELECT * FROM users WHERE email = $1 AND password = $2",
-    [email, password]
+    [email, password],
   );
   return rows[0];
 };
@@ -37,7 +34,7 @@ export const loginUserDB = async (email: string, password: string) => {
 export const updateUserDB = async (id: number, user: User) => {
   const { rows } = await query(
     "UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *",
-    [user.username, user.email, user.password, id]
+    [user.username, user.email, user.password, id],
   );
   return rows[0];
 };

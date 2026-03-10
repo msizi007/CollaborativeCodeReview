@@ -11,6 +11,7 @@ import commentsRouter from "./routes/commentRoutes";
 
 const app: Express = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // serve static assets from public
 app.use(express.static(path.join(__dirname, "public")));
 // routes
@@ -30,13 +31,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get("/", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "views", "index.html"));
+  res.sendFile("index.html");
 });
 
 const startServer = async () => {
   await testConnection();
-  app.listen(process.env.PORT, () => {
-    console.log(`App running on http://localhost:${process.env.PORT}`);
+  app.listen(process.env.PORT || 5000, () => {
+    console.log(`App running on http://localhost:${process.env.PORT || 5000}`);
   });
 };
 
