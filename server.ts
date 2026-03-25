@@ -43,11 +43,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 const startServer = async () => {
   // Database connection
   await testConnection();
-  await createCommentsTable();
-  await createMembersTable();
-  await createProjectsTable();
-  await createSubmissionsTable();
   await createUsersTable();
+  await createProjectsTable();
+  await createMembersTable();
+  await createSubmissionsTable();
+  await createCommentsTable();
 
   // app runner
   app.listen(process.env.PORT || 5000, () => {
