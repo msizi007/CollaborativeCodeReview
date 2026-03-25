@@ -57,6 +57,16 @@ This document outlines the API endpoints for the Collaborative Code Review Platf
 | `POST` | `/register` | No            |
 | `POST` | `/login`    | No            |
 
+- User Object
+
+```json
+{
+  "username": "msizi007",
+  "email": "msizi@example.com",
+  "password": "StrongPassword123!"
+}
+```
+
 ---
 
 ### User Management
@@ -88,6 +98,15 @@ _(All routes below require the `protect` middleware)_
 | `POST`   | `/:id/members`      | Yes           |
 | `DELETE` | `/:id/members/:uid` | Yes           |
 
+- Project Object
+
+```json
+{
+  "title": "E-Commerce API",
+  "description": "A Node.js backend for a digital storefront."
+}
+```
+
 ---
 
 ### Code Submissions
@@ -105,6 +124,17 @@ _(All routes below require the `protect` middleware)_
 | `GET`    | `/:pid/comments/:cid` | No\*          |
 | `POST`   | `/:id/comments`       | No\*          |
 
+- Submission Object
+
+```json
+{
+  "title": "Auth Middleware Fix",
+  "content": "router.use(protect); const checkRole = ...",
+  "project_id": 1,
+  "status": "pending"
+}
+```
+
 ---
 
 ### Comments
@@ -116,6 +146,15 @@ _(All routes below require the `protect` middleware)_
 | `PUT`    | `/:id`   | No\*          |
 | `DELETE` | `/:id`   | No\*          |
 
+- Comment Object
+
+```json
+{
+  "content": "This logic looks clean, but check for null values on line 12.",
+  "submission_id": 10
+}
+```
+
 ---
 
 > **Legend & Implementation Notes:**
@@ -123,3 +162,7 @@ _(All routes below require the `protect` middleware)_
 > - **Yes**: Route is protected by the `protect` middleware.
 > - **No\***: These routes currently lack the `protect` middleware in your provided code snippets.
 > - **Owner/Admin**: Logic should be implemented in controllers to ensure only authorized users can `PUT` or `DELETE` specific resources.
+
+## Author
+
+M.S Mwelase
